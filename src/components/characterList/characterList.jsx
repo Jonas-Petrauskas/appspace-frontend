@@ -7,7 +7,7 @@ function CharacterList() {
 	useEffect(() => {
 		async function getData() {
 			try {
-				const res = await fetch(`https://rickandmortyapi.com/api/character/${currentPage}`);
+				const res = await fetch(`https://rickandmortyapi.com/api/character/?page=1`);
 				const data = await res.json();
 				setItems(data);
 			} catch (err) {
@@ -16,13 +16,30 @@ function CharacterList() {
 		}
 		getData();
 	}, []);
-	const handlePageClick = (data: any) => {
-		console.log(data.selected);
+
+	const fetchPages = async currentPage => {
+		const res = await fetch(`https://rickandmortyapi.com/api/character/?page=${currentPage}`);
+		const data = await res.json();
+		return data;
 	};
 
-	console.log(items);
+	const handlePageClick = async data => {
+		let currentPage = data.selected + 1;
+		const currentPageFromServer = await fetchPages(currentPage);
+		setItems(currentPageFromServer);
+	};
+
+
 	return (
 		<div>
+			{items.results &&
+				items.results.map(item => {
+					return (
+						<div>
+							<h1>{item.name}</h1>
+						</div>
+					);
+				})}
 			<ReactPaginate
 				previousLabel={'Previous'}
 				nextLabel={'Next'}
