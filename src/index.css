@@ -1,0 +1,10 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-image: radial-gradient(circle, #051937, #072a47, #0e3b57, #1a4d65, #296073);
+	font-family: 'IBM Plex Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+}

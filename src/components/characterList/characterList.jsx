@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import image from '../../assets/header-img-rick.png';
+import Header from '../header/header';
+import './character.css';
+import {
+	StyledContainer,
+	StyledCharacterCard,
+	StyledImage,
+	StyledTitle,
+	StyledLoadingContainer
+} from './characterList.style';
 
 function CharacterList() {
 	const [items, setItems] = useState([]);
+	const [isLoading, SetIsLoading] = useState(true);
 
 	useEffect(() => {
 		async function getData() {
@@ -10,6 +21,9 @@ function CharacterList() {
 				const res = await fetch(`https://rickandmortyapi.com/api/character/?page=1`);
 				const data = await res.json();
 				setItems(data);
+				setTimeout(() => {
+					SetIsLoading(false);
+				}, 1000);
 			} catch (err) {
 				console.error(err);
 			}
@@ -29,17 +43,43 @@ function CharacterList() {
 		setItems(currentPageFromServer);
 	};
 
+	console.log(items);
 
 	return (
-		<div>
-			{items.results &&
-				items.results.map(item => {
-					return (
-						<div>
-							<h1>{item.name}</h1>
-						</div>
-					);
-				})}
+		<>
+			{isLoading ? (
+				<StyledLoadingContainer>
+					<img src={image} alt="img"></img>
+				</StyledLoadingContainer>
+			) : (<>
+				<Header />
+				<StyledContainer className="test">
+					{items.results &&
+						items.results.map(item => {
+							return (
+								<div key={item.id} className="card-1">
+									<StyledCharacterCard className="card-front" key={item.id}>
+										<StyledImage src={item.image} alt="img" />
+										<StyledTitle>{item.name}</StyledTitle>
+									</StyledCharacterCard>
+									<div className="card-back">
+										<h1>{item.name}</h1>
+										<div>
+											Species:<span>{item.species}</span>
+										</div>
+										<div>
+											Gender:<span>{item.gender}</span>
+										</div>
+										<div>
+											Status:<span>{item.status}</span>
+										</div>
+									</div>
+								</div>
+							);
+						})}
+				</StyledContainer>
+				</>
+			)}
 			<ReactPaginate
 				previousLabel={'Previous'}
 				nextLabel={'Next'}
@@ -59,7 +99,7 @@ function CharacterList() {
 				breakLinkClassName={'page-link'}
 				activeClassName={'active'}
 			/>
-		</div>
+		</>
 	);
 }
 
