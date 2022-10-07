@@ -1,10 +1,17 @@
 import CharacterList from './components/characterList/characterList';
+import PageNotFound from './components/pageNotFound/pageNotFound';
+import { Route, Routes } from 'react-router-dom';
 
-/**
- * This is the entry point of the App, feel free to
- * modify this file as you want!
- *
- */
-const App = () => <CharacterList />;
+function App() {
+	return (
+		<>
+			{/* <Header /> */}
+			<Routes>
+				<Route path="/" element={<CharacterList />} />
+				<Route path="*" element={<PageNotFound />} />
+			</Routes>
+		</>
+	);
+}
 
 export default App;

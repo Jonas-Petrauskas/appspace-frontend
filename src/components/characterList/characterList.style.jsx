@@ -19,7 +19,7 @@ export const StyledContainer = styled.div`
 		grid-template-columns: repeat(4, 1fr);
 	}
 	@media screen and (min-width: 1025px) {
-		margin: 0 auto;
+		margin: 0 auto 30px auto;
 		max-width: 800px;
 	}
 `;
@@ -49,6 +49,7 @@ export const StyledLoadingContainer = styled.div`
 	z-index: 100;
 	height: 100vh;
 	margin-top: -84.5px;
+	margin-bottom: -38px;
 	background-image: radial-gradient(circle, #051937, #072a47, #0e3b57, #1a4d65, #296073);
 
 	img {

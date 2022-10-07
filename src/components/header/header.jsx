@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import image from '../../assets/header-img-rick.png';
 import { StyledNav, StyledImage, StyledInput } from './header.style';
 
@@ -15,9 +15,9 @@ function Header() {
 		<StyledNav>
 			<ul>
 				<li>
-					{/* <Link to="/"> */}
+					<Link to="/">
 						<StyledImage src={image} alt="" />
-					{/* </Link> */}
+					</Link>
 					<StyledInput
 						value={searchValue}
 						onChange={handleChange}
