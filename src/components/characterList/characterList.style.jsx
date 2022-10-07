@@ -24,15 +24,11 @@ export const StyledContainer = styled.div`
 	}
 `;
 
-export const StyledCharacterCard = styled.div`
+export const StyledCardFront = styled.div`
 	border-radius: 10px;
-	/* @media screen and (min-width: 768px) {
-		transition: transform 0.2s ease-in-out;
-		&:hover {
-			transform: scale(1.1);
-			opacity: 0.8;
-		}
-	} */
+
+	transition: all 1.25s;
+	backface-visibility: hidden;
 `;
 
 export const StyledImage = styled.img`
@@ -42,9 +38,10 @@ export const StyledImage = styled.img`
 `;
 
 export const StyledTitle = styled.h1`
+	width: 100%;
+	margin: 10px 0;
 	font-size: 16px;
 	color: #c1f762;
-	width: 100%;
 `;
 
 export const StyledLoadingContainer = styled.div`
@@ -72,5 +69,53 @@ export const StyledLoadingContainer = styled.div`
 		100% {
 			transform: rotate(360deg);
 		}
+	}
+`;
+
+export const StyledCardBack = styled.div`
+	transition: all 1.25s;
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: calc(100% - 6px);
+	height: 100%;
+	border: 3px solid #c1f762;
+	border-radius: 10px;
+	color: #c1f762;
+
+	transform: rotateY(180deg);
+
+	h1 {
+		padding: 0 5px;
+		margin: 0 0 10px 0;
+		font-size: 20px;
+	}
+
+	div {
+		font-size: 16px;
+		margin-bottom: 10px;
+		padding: 0 5px;
+	}
+
+	span {
+		margin-left: 5px;
+	}
+`;
+
+export const StyledCard = styled.div`
+	position: relative;
+
+	:hover ${StyledCardFront} {
+		transform: rotateY(-180deg);
+	}
+
+	:hover ${StyledCardBack} {
+		transform: rotateY(0);
 	}
 `;

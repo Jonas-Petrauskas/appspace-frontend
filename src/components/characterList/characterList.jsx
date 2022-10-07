@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import image from '../../assets/header-img-rick.png';
 import Header from '../header/header';
-import './character.css';
 import {
 	StyledContainer,
-	StyledCharacterCard,
+	StyledCardFront,
 	StyledImage,
 	StyledTitle,
-	StyledLoadingContainer
+	StyledLoadingContainer,
+	StyledCard,
+	StyledCardBack
 } from './characterList.style';
 
 function CharacterList() {
@@ -43,8 +44,6 @@ function CharacterList() {
 		setItems(currentPageFromServer);
 	};
 
-	console.log(items);
-
 	return (
 		<>
 			{isLoading ? (
@@ -53,16 +52,16 @@ function CharacterList() {
 				</StyledLoadingContainer>
 			) : (<>
 				<Header />
-				<StyledContainer className="test">
+				<StyledContainer>
 					{items.results &&
 						items.results.map(item => {
 							return (
-								<div key={item.id} className="card-1">
-									<StyledCharacterCard className="card-front" key={item.id}>
+								<StyledCard key={item.id} >
+									<StyledCardFront key={item.id}>
 										<StyledImage src={item.image} alt="img" />
 										<StyledTitle>{item.name}</StyledTitle>
-									</StyledCharacterCard>
-									<div className="card-back">
+									</StyledCardFront>
+									<StyledCardBack >
 										<h1>{item.name}</h1>
 										<div>
 											Species:<span>{item.species}</span>
@@ -73,13 +72,11 @@ function CharacterList() {
 										<div>
 											Status:<span>{item.status}</span>
 										</div>
-									</div>
-								</div>
+									</StyledCardBack>
+								</StyledCard>
 							);
 						})}
 				</StyledContainer>
-				</>
-			)}
 			<ReactPaginate
 				previousLabel={'Previous'}
 				nextLabel={'Next'}
@@ -98,7 +95,9 @@ function CharacterList() {
 				breakClassName={'page-item'}
 				breakLinkClassName={'page-link'}
 				activeClassName={'active'}
-			/>
+				/>
+				</>
+			)}
 		</>
 	);
 }
