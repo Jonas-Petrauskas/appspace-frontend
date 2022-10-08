@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import image from '../../assets/header-img-rick.png';
-import Header from '../header/header';
-import { fetchApi, fetchCurrentPage } from '../../services/apiServices';
+import { Link } from 'react-router-dom';
+
+import { fetchApi, fetchCurrentPage, filterByName } from '../../services/apiServices';
 import {
 	StyledContainer,
 	StyledCardFront,
@@ -10,20 +11,24 @@ import {
 	StyledTitle,
 	StyledLoadingContainer,
 	StyledCard,
-	StyledCardBack
+	StyledCardBack,
+	StyledNav,
+	StyledImageNav,
+	StyledInputNav
 } from './characterList.style';
 
 function CharacterList() {
-	const [items, setItems] = useState([]);
-	const [isLoading, SetIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true);
+	const [filteredData, setFilteredData] = useState('');
+
 
 	useEffect(() => {
 		async function getData() {
 			try {
 				const data = await fetchApi();
-				setItems(data);
+				setFilteredData(data);
 				setTimeout(() => {
-					SetIsLoading(false);
+					setIsLoading(false);
 				}, 1000);
 			} catch (err) {
 				console.error(err);
@@ -40,8 +45,21 @@ function CharacterList() {
 	const handlePageClick = async data => {
 		let currentPage = data.selected + 1;
 		const currentPageFromServer = await fetchPages(currentPage);
-		setItems(currentPageFromServer);
+		setFilteredData(currentPageFromServer);
 	};
+
+	const fetchedFilteredResults = async currentName => {
+		const data = await filterByName(currentName);
+		return data;
+	};
+
+	const handleSearch = async event => {
+		let value = event.target.value.toLowerCase();
+		const resultValue = await fetchedFilteredResults(value);
+		setFilteredData(resultValue);
+	};
+
+	console.log(filteredData)
 
 	return (
 		<>
@@ -51,10 +69,23 @@ function CharacterList() {
 				</StyledLoadingContainer>
 			) : (
 				<>
-					<Header />
+					<StyledNav>
+						<ul>
+							<li>
+								<Link to="/">
+									<StyledImageNav src={image} alt="" />
+								</Link>
+								<StyledInputNav
+									onChange={event => handleSearch(event)}
+									type="text"
+									placeholder="Search for character..."
+								/>
+							</li>
+						</ul>
+					</StyledNav>
 					<StyledContainer>
-						{items.results &&
-							items.results.map(item => {
+						{filteredData.results &&
+							filteredData.results.map(item => {
 								return (
 									<StyledCard key={item.id}>
 										<StyledCardFront key={item.id}>
@@ -81,7 +112,7 @@ function CharacterList() {
 						previousLabel={'<<'}
 						nextLabel={'>>'}
 						breakLabel={'...'}
-						pageCount={42}
+						pageCount={filteredData.info.pages}
 						marginPagesDisplayed={2}
 						pageRangeDisplayed={1}
 						onPageChange={handlePageClick}

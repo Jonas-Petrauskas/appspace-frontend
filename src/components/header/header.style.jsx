@@ -11,7 +11,7 @@ export const StyledNav = styled.nav`
 		rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 
 	ul {
-		margin: 0 30px 0 30px;
+		margin: 0 33px 0 33px;
 		padding: 0;
 	}
 
