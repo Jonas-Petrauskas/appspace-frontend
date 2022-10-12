@@ -89,7 +89,7 @@ export const StyledCardBack = styled.div`
 	align-items: center;
 	width: calc(100% - 6px);
 	height: 100%;
-	border: 3px solid #c1f762;
+	/* border: 3px solid #c1f762; */
 	border-radius: 10px;
 	color: #c1f762;
 
@@ -123,9 +123,6 @@ export const StyledCard = styled.div`
 		transform: rotateY(0);
 	}
 `;
-
-
-// Styled nav
 
 export const StyledNav = styled.nav`
 	position: sticky;

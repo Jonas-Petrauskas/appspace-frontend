@@ -60,7 +60,7 @@ function CharacterList() {
 
 	const handlePageClick = async data => {
 		const fetchUrl = generateFetchUrl(data.selected + 1);
-		console.log(data.selected + 1, '+ 1 data selcted');
+		// console.log(data.selected + 1, '+ 1 data selcted');
 		setCurrentPage(data.selected + 1);
 		let rickAndMortyCardsData = await fetchPages(fetchUrl);
 
@@ -129,7 +129,6 @@ function CharacterList() {
 											<StyledTitle>{item.name}</StyledTitle>
 										</StyledCardFront>
 										<StyledCardBack>
-											<h1>{item.name}</h1>
 											<div>
 												Species:<span>{item.species}</span>
 											</div>

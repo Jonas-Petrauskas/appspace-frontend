@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import image from '../../assets/header-img-rick.png';
 import { StyledNav, StyledImage, StyledInput } from './header.style';
@@ -8,7 +8,6 @@ function Header() {
 
 	const handleChange = event => {
 		setSearchValue(event.target.value);
-		console.log('value is:', event.target.value);
 	};
 
 	return (
