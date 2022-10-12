@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import image from '../../assets/header-img-rick.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 import { fetchApi, fetchCurrentPage, filterByName } from '../../services/apiServices';
 import {
@@ -19,13 +19,34 @@ import {
 
 function CharacterList() {
 	const [isLoading, setIsLoading] = useState(true);
+	const [currentPage, setCurrentPage] = useState(0);
+	const [initialPage, setInitalPage] = useState(0);
 	const [filteredData, setFilteredData] = useState('');
 
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const [searchData, setSearchData] = useState('');
+
+	const [initialPagination, setIntialPagination] = useState(true);
+
+	const location = useLocation();
 
 	useEffect(() => {
 		async function getData() {
 			try {
-				const data = await fetchApi();
+				const queryParams = new URLSearchParams(location.search);
+				const currentInitialPage = queryParams.get('page');
+				const currentInitalSearch = queryParams.get('name');
+
+				const data = await fetchApi(`?${queryParams.toString()}`);
+
+				if (currentInitialPage) {
+					setCurrentPage(Number(currentInitialPage));
+					setInitalPage(Number(currentInitialPage));
+				}
+
+				if (currentInitalSearch) setSearchData(currentInitalSearch);
+
 				setFilteredData(data);
 				setTimeout(() => {
 					setIsLoading(false);
@@ -43,23 +64,47 @@ function CharacterList() {
 	};
 
 	const handlePageClick = async data => {
-		let currentPage = data.selected + 1;
-		const currentPageFromServer = await fetchPages(currentPage);
-		setFilteredData(currentPageFromServer);
+		console.log(data.selected, 'selected');
+		const fetchUrl = generateFetchUrl(data.selected + 1);
+		setCurrentPage(data.selected + 1);
+
+		// const currentPageToFetch = data.selected + 1;
+		let rickAndMortyCardsData = await fetchPages(fetchUrl);
+
+		setFilteredData(rickAndMortyCardsData);
+
+		const newResponseUrl = new URL(fetchUrl);
+		const newResponseUrlQueryParams = new URLSearchParams(newResponseUrl.search);
+		setSearchParams(newResponseUrlQueryParams.toString());
+		console.log(newResponseUrlQueryParams.toString());
+	};
+
+	const generateFetchUrl = function (pageToFetch) {
+		console.log(pageToFetch, 'fetch apge', currentPage, 'current');
+		const url = filteredData.info.next || filteredData.info.prev;
+		const newPageUrl = url.replace(/page=\d+/, `page=${pageToFetch}`);
+		return newPageUrl;
+		// if (pageToFetch > currentPage) return filteredData.info.next;
+		// return filteredData?.info?.prev;
 	};
 
 	const fetchedFilteredResults = async currentName => {
-		const data = await filterByName(currentName);
-		return data;
+		const rickAndMortyFilteredCardData = await filterByName(currentName);
+		return rickAndMortyFilteredCardData;
 	};
 
 	const handleSearch = async event => {
-		let value = event.target.value.toLowerCase();
-		const resultValue = await fetchedFilteredResults(value);
-		setFilteredData(resultValue);
+		const value = event.target.value.toLowerCase();
+		setSearchData(value);
+		const { data, fetchUrl } = await filterByName(value);
+		setFilteredData(data);
+
+		const newResponseUrlQueryParams = new URLSearchParams(fetchUrl.search);
+		setSearchParams(newResponseUrlQueryParams.toString());
+		setCurrentPage(0);
 	};
 
-	console.log(filteredData)
+	console.log(filteredData);
 
 	return (
 		<>
@@ -77,6 +122,7 @@ function CharacterList() {
 								</Link>
 								<StyledInputNav
 									onChange={event => handleSearch(event)}
+									value={searchData}
 									type="text"
 									placeholder="Search for character..."
 								/>
@@ -115,6 +161,7 @@ function CharacterList() {
 						pageCount={filteredData.info.pages}
 						marginPagesDisplayed={2}
 						pageRangeDisplayed={1}
+						forcePage={initialPage - 1}
 						onPageChange={handlePageClick}
 						containerClassName={'pagination pagination-sm justify-content-center'}
 						pageClassName={'page-item'}

@@ -1,6 +1,6 @@
-export const fetchApi = async () => {
+export const fetchApi = async queryParams => {
 	try {
-		const response = await fetch('https://rickandmortyapi.com/api/character/');
+		const response = await fetch(`https://rickandmortyapi.com/api/character/${queryParams}`);
 		if (!response.ok) {
 			throw Error('could not fetch the data');
 		}
@@ -10,9 +10,9 @@ export const fetchApi = async () => {
 	}
 };
 
-export const fetchCurrentPage = async currentPage => {
+export const fetchCurrentPage = async fetchUrl => {
 	try {
-		const response = await fetch(`https://rickandmortyapi.com/api/character/?page=${currentPage}`);
+		const response = await fetch(fetchUrl);
 		if (!response.ok) {
 			throw Error('could not fetch the data');
 		}
@@ -24,8 +24,15 @@ export const fetchCurrentPage = async currentPage => {
 
 export const filterByName = async currentName => {
 	try {
-		const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${currentName}`);
-		return response.json();
+		const fetchUrl = `https://rickandmortyapi.com/api/character/?name=${currentName}`;
+		const response = await fetch(fetchUrl);
+
+		const data = response.json();
+		console.log(data, 'data');
+		return {
+			data: data,
+			fetchUrl: fetchUrl
+		};
 	} catch (err) {
 		console.error(err);
 	}
