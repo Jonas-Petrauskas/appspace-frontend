@@ -8,7 +8,12 @@ You can use the Readme to document and explain your decisions.
 
 ....
 
-## Available Scripts
+## Getting Started
+
+1. Clone repo
+```
+git clone 
+```
 
 In the project directory, you can run:
 
@@ -20,6 +25,6 @@ In the project directory, you can run:
 
 ---
 
-#### If you feel the need to extend the webpack config you can use this command.
+## Developed by
+Jonas Petrauskas - [GitHub](https://github.com/Jonas-Petrauskas) - [LinkedIn](https://www.linkedin.com/in/jonas-petrauskas-78038894/)
 
-### `npm run eject`
