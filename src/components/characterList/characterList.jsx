@@ -22,13 +22,8 @@ function CharacterList() {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [initialPage, setInitalPage] = useState(0);
 	const [filteredData, setFilteredData] = useState('');
-
 	const [searchParams, setSearchParams] = useSearchParams();
-
 	const [searchData, setSearchData] = useState('');
-
-	const [initialPagination, setIntialPagination] = useState(true);
-
 	const location = useLocation();
 
 	useEffect(() => {
@@ -64,11 +59,9 @@ function CharacterList() {
 	};
 
 	const handlePageClick = async data => {
-		console.log(data.selected, 'selected');
 		const fetchUrl = generateFetchUrl(data.selected + 1);
+		console.log(data.selected + 1, '+ 1 data selcted');
 		setCurrentPage(data.selected + 1);
-
-		// const currentPageToFetch = data.selected + 1;
 		let rickAndMortyCardsData = await fetchPages(fetchUrl);
 
 		setFilteredData(rickAndMortyCardsData);
@@ -76,7 +69,6 @@ function CharacterList() {
 		const newResponseUrl = new URL(fetchUrl);
 		const newResponseUrlQueryParams = new URLSearchParams(newResponseUrl.search);
 		setSearchParams(newResponseUrlQueryParams.toString());
-		console.log(newResponseUrlQueryParams.toString());
 	};
 
 	const generateFetchUrl = function (pageToFetch) {
@@ -88,10 +80,10 @@ function CharacterList() {
 		// return filteredData?.info?.prev;
 	};
 
-	const fetchedFilteredResults = async currentName => {
-		const rickAndMortyFilteredCardData = await filterByName(currentName);
-		return rickAndMortyFilteredCardData;
-	};
+	// const fetchedFilteredResults = async currentName => {
+	// 	const rickAndMortyFilteredCardData = await filterByName(currentName);
+	// 	return rickAndMortyFilteredCardData;
+	// };
 
 	const handleSearch = async event => {
 		const value = event.target.value.toLowerCase();
@@ -103,8 +95,6 @@ function CharacterList() {
 		setSearchParams(newResponseUrlQueryParams.toString());
 		setCurrentPage(0);
 	};
-
-	console.log(filteredData);
 
 	return (
 		<>
@@ -161,7 +151,7 @@ function CharacterList() {
 						pageCount={filteredData.info.pages}
 						marginPagesDisplayed={2}
 						pageRangeDisplayed={1}
-						forcePage={initialPage - 1}
+						forcePage={initialPage}
 						onPageChange={handlePageClick}
 						containerClassName={'pagination pagination-sm justify-content-center'}
 						pageClassName={'page-item'}

@@ -27,8 +27,7 @@ export const filterByName = async currentName => {
 		const fetchUrl = `https://rickandmortyapi.com/api/character/?name=${currentName}`;
 		const response = await fetch(fetchUrl);
 
-		const data = response.json();
-		console.log(data, 'data');
+		const data = await response.json();
 		return {
 			data: data,
 			fetchUrl: fetchUrl
