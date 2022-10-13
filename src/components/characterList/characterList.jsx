@@ -73,7 +73,6 @@ function CharacterList() {
 
 	// Helper function for Url
 	const generateFetchUrl = function (pageToFetch) {
-		console.log(pageToFetch, 'fetch apge', currentPage, 'current');
 		const url = filteredData.info.next || filteredData.info.prev;
 		const newPageUrl = url.replace(/page=\d+/, `page=${pageToFetch}`);
 		return newPageUrl;
