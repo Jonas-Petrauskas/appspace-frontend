@@ -1,5 +1,7 @@
 # Welcome to Appspace React FE Challenge
 
+Here's the link to deployed version of app - https://appspace-rick-and-morty.herokuapp.com/
+
 ## About project
 
 ### Implemented 
@@ -24,6 +26,7 @@
 
 The Main focus was on Url Search Params. It took most of the time to handle that it will be dinamically updated when you use search or changing pages.
 Played a bit with CSS animations, so when you hover over the character card, it flips and displays info about the character.
+As well deployed the app on Heroku. It's not perfectly woking, but it is just to see the general view.
 
 
 ---
