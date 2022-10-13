@@ -8,28 +8,28 @@
 3. Implemented loading animation. 
 4. **React router V6**, for:
 - Page not found
-- Routing to home page from header icon.
-5. Implemented search bar, which filters characters by name.
+- Routing to home page from the header icon.
+5. Implemented a search bar, which filters characters by name.
 6. Paginated list of items (**Used React Paginate package**):
-- Shows all pages for non filtered characters.
+- Shows all pages for non-filtered characters.
 - Shows all pages related to filtered charactes by name.
-- Have button for previous and next page.
-- Have numbered buttons, so you can go to last or first one.
+- Have a button for previous and next page.
+- Have numbered buttons, so you can go to the last or first one.
 7. For pagination and filtering implemented **URL Search Params**:
-- Which works and updates when you search for character.
-- It updates when you change to different page.
+- Which works and updates when you search for a character.
+- It updates when you change to a different page.
 ---
 
 ### Overview
 
-Main focus was for Url Search Params. It took most of time to handle that it will be dinamically updated when you use search or changing pages.
-Played a bit with CSS animations, so when you hover over the characher card, it flips and displays info about character.
+The Main focus was on Url Search Params. It took most of the time to handle that it will be dinamically updated when you use search or changing pages.
+Played a bit with CSS animations, so when you hover over the character card, it flips and displays info about the character.
 
 
 ---
 
 ### Things I had in mind
-To biuld navigation with more options, and more search filters. But I took a path to make a fully working Url serch params function.
+To build navigation with more options, and more search filters. But I took a path to make a fully working Url search params function.
 
 ---
 ## Screenshots
