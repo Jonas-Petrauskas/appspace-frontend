@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 function App() {
 	return (
 		<>
-			{/* <Header /> */}
 			<Routes>
 				<Route path="/" element={<CharacterList />} />
 				<Route path="*" element={<PageNotFound />} />

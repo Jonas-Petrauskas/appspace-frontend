@@ -15,7 +15,7 @@ function Header() {
 			<ul>
 				<li>
 					<Link to="/">
-						<StyledImage src={image} alt="" />
+						<StyledImage src={image} alt="img" />
 					</Link>
 					<StyledInput
 						value={searchValue}

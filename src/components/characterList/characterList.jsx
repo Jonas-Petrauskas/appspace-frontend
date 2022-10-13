@@ -58,9 +58,9 @@ function CharacterList() {
 		return data;
 	};
 
+	// Handling page on click and updating Url search params
 	const handlePageClick = async data => {
 		const fetchUrl = generateFetchUrl(data.selected + 1);
-		// console.log(data.selected + 1, '+ 1 data selcted');
 		setCurrentPage(data.selected + 1);
 		let rickAndMortyCardsData = await fetchPages(fetchUrl);
 
@@ -71,20 +71,15 @@ function CharacterList() {
 		setSearchParams(newResponseUrlQueryParams.toString());
 	};
 
+	// Helper function for Url
 	const generateFetchUrl = function (pageToFetch) {
 		console.log(pageToFetch, 'fetch apge', currentPage, 'current');
 		const url = filteredData.info.next || filteredData.info.prev;
 		const newPageUrl = url.replace(/page=\d+/, `page=${pageToFetch}`);
 		return newPageUrl;
-		// if (pageToFetch > currentPage) return filteredData.info.next;
-		// return filteredData?.info?.prev;
 	};
 
-	// const fetchedFilteredResults = async currentName => {
-	// 	const rickAndMortyFilteredCardData = await filterByName(currentName);
-	// 	return rickAndMortyFilteredCardData;
-	// };
-
+	// Handling search input and Url search params
 	const handleSearch = async event => {
 		const value = event.target.value.toLowerCase();
 		setSearchData(value);
